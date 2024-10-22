@@ -128,7 +128,7 @@ function displaySubnetInTable(lanName, networkAddress, subnetMask, broadcastAddr
     <td>${lanName}</td>
     <td>${networkAddress}</td>
     <td>${subnetMask}</td>
-     <td>${stepSize}</td>
+    <td>${stepSize}</td>
     <td>${broadcastAddress}</td>
   `;
   resultTableBody.appendChild(row);
