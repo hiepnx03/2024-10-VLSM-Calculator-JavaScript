@@ -96,15 +96,15 @@ function calculateSubnet(networkAddress, hostCount, lanName, initialSubnetBits) 
 
   const result = `
                 <b style="text-align: center">------ ${lanName} ------</b><br>
-                ${lanName} Number of Hosts: ${hostCount}<br>
-                ${lanName} m: (2^m-2 >= ${hostCount}) => ${m}<br>
-                ${lanName} Subnet Bits: 32 - m = 32 - ${m} = ${subnetBits} =>/${subnetBits}<br>
-                ${lanName} Step: 2^m = 2^${m}  ${stepSize}<br>
-                ${lanName} Network Address: ${networkAddress}/${subnetBits}<br>
-                ${lanName} Subnet Mask: ${subnetMask}<br>
-                ${lanName} First Host: ${firstHostAddress}<br>
-                ${lanName} Last Host: ${lastHostAddress}<br>
-                ${lanName} Broadcast Address: ${broadcastAddress}<br><br>
+                ${lanName}  Number of Hosts: ${hostCount}<br>
+                ${lanName}  m: (2^m-2 >= ${hostCount}) => ${m}<br>
+                ${lanName}  Subnet Bits: 32 - m = 32 - ${m} = ${subnetBits} => /${subnetBits}<br>
+                ${lanName}  Step: 2^m = 2^${m} = ${stepSize}<br>
+                ${lanName}  Network Address: ${networkAddress}/${subnetBits}<br>
+                ${lanName}  Subnet Mask: ${subnetMask}<br>
+                ${lanName}  First Host: ${firstHostAddress}<br>
+                ${lanName}  Last Host: ${lastHostAddress}<br>
+                ${lanName}  Broadcast Address: ${broadcastAddress}<br><br>
             `;
 
   document.getElementById('result').innerHTML += result;
