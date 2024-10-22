@@ -65,6 +65,9 @@ function sortLans(hosts, lanIndices) {
   }
 }
 
+// Global variable to keep track of the row index
+let rowIndex = 1;
+
 // Calculate Subnet for each LAN
 function calculateSubnet(networkAddress, hostCount, lanName, initialSubnetBits) {
   let m = Math.ceil(Math.log2(hostCount + 2));
@@ -95,11 +98,11 @@ function calculateSubnet(networkAddress, hostCount, lanName, initialSubnetBits) 
   //           `;
 
   const result = `
-                <b style="text-align: center">------ ${lanName} ------</b><br>
+                <b>------ ${lanName} ------</b><br>
                 ${lanName}  Number of Hosts: ${hostCount}<br>
-                ${lanName}  m: (2^m-2 >= ${hostCount}) => ${m}<br>
+                ${lanName}  m: (2<sup>m</sup>-2 >= ${hostCount}) => ${m}<br>
                 ${lanName}  Subnet Bits: 32 - m = 32 - ${m} = ${subnetBits} => /${subnetBits}<br>
-                ${lanName}  Step: 2^m = 2^${m} = ${stepSize}<br>
+                ${lanName}  Step: 2<sup>m</sup> = 2<sup>${m}</sup> = ${stepSize}<br>
                 ${lanName}  Network Address: ${networkAddress}/${subnetBits}<br>
                 ${lanName}  Subnet Mask: ${subnetMask}<br>
                 ${lanName}  First Host: ${firstHostAddress}<br>
@@ -107,10 +110,29 @@ function calculateSubnet(networkAddress, hostCount, lanName, initialSubnetBits) 
                 ${lanName}  Broadcast Address: ${broadcastAddress}<br><br>
             `;
 
+
   document.getElementById('result').innerHTML += result;
+  // Call the function to display subnet information in the table
+  displaySubnetInTable(lanName, `${networkAddress}/${subnetBits}`, subnetMask, broadcastAddress,stepSize);
 
   const nextNetwork = baseIP + stepSize;
   return intToIp(nextNetwork);
+}
+
+// Function to display subnet information in a table
+function displaySubnetInTable(lanName, networkAddress, subnetMask, broadcastAddress,stepSize) {
+  const resultTableBody = document.getElementById('resultTableBody');
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${rowIndex}</td>
+    <td>${lanName}</td>
+    <td>${networkAddress}</td>
+    <td>${subnetMask}</td>
+     <td>${stepSize}</td>
+    <td>${broadcastAddress}</td>
+  `;
+  resultTableBody.appendChild(row);
+  rowIndex++; // Increment the index for the next row
 }
 
 // Divide Subnets among LANs
@@ -136,8 +158,11 @@ function calculateVLSM() {
     lanIndices.push(i);
   }
 
-  // Clear the result area before new calculation
+  // Clear the result area and table before new calculation
   document.getElementById('result').innerHTML = '';
+  const resultTableBody = document.getElementById('resultTableBody');
+  resultTableBody.innerHTML = ''; // Clear previous table data
+  rowIndex = 1; // Reset the row index
 
   // Sort LANs by number of hosts
   sortLans(hosts, lanIndices);

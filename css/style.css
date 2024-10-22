@@ -16,7 +16,7 @@ body {
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
-  max-width: 600px;
+  /*max-width: 600px;*/
   margin: auto;
   background-color: #f4f4f4;
 }
@@ -68,7 +68,25 @@ label {
   border-radius: 5px;
   transition: background-color 0.3s ease;
 }
-
+h1, h2 {
+  color: #333;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+table, th, td {
+  border: 1px solid #ddd;
+}
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #4CAF50;
+  color: white;
+}
 .link-container a:hover {
   background-color: #f4f4f4;
 }
