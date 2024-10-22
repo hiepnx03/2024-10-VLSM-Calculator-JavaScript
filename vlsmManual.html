@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Subnetting and VLSM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .link-container {
+      display: flex;
+      justify-content: space-between; /* Căn đều các liên kết */
+      padding: 10px;
+    }
+
+    .link-container a {
+      text-decoration: none;
+      color: #333;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .link-container a:hover {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+<div class="content">
+  <h1>Địa chỉ IPv4</h1>
+  <p><strong>32 bit:</strong> 11000000 10101000 00001010 00000000</p>
+  <p><strong>192.168.10.0</strong></p>
+  <p>Địa chỉ IP bao gồm:</p>
+  <ul>
+    <li>NET_id (địa chỉ mạng)</li>
+    <li>HOST_id (địa chỉ máy)</li>
+  </ul>
+
+  <h2>Các lớp địa chỉ IP</h2>
+  <ul>
+    <li><strong>Lớp A:</strong> 8 bit cho NET_id, 24 bit cho HOST_id, Range: 1-126</li>
+    <li><strong>Lớp B:</strong> 16 bit cho NET_id, 16 bit cho HOST_id, Range: 128-191</li>
+    <li><strong>Lớp C:</strong> 24 bit cho NET_id, 8 bit cho HOST_id, Range: 192-223</li>
+  </ul>
+
+  <h2>Subnet mask (mặt nạ mạng)</h2>
+  <ul>
+    <li><strong>Lớp A:</strong> 255.0.0.0 (11111111.00000000.00000000.00000000)</li>
+    <li><strong>Lớp B:</strong> 255.255.0.0 (11111111.11111111.00000000.00000000)</li>
+    <li><strong>Lớp C:</strong> 255.255.255.0 (11111111.11111111.11111111.00000000)</li>
+  </ul>
+
+  <h2>Không sử dụng hai địa chỉ này để đánh địa chỉ IP cho các host</h2>
+  <ul>
+    <li>Địa chỉ mạng đó</li>
+    <li>Địa chỉ broadcast</li>
+  </ul>
+
+  <h2>Ví dụ: 190.244.30.0/18</h2>
+  <ul>
+    <li><strong>Subnet mask:</strong> 255.255.192.0 (11111111.11111111.11000000.00000000)</li>
+  </ul>
+
+  <h2>Private IP và Public IP</h2>
+  <ul>
+    <li>10.0.0.0 đến 10.255.255.255</li>
+    <li>172.16.0.0 đến 172.31.255.255</li>
+    <li>192.168.0.0 đến 192.168.255.255</li>
+  </ul>
+
+  <h2>Chia mạng (Subnetting)</h2>
+  <p><strong>VLSM:</strong> Chia thành các mạng có kích thước không đồng đều</p>
+
+  <h2>Ví dụ: Chia mạng 192.168.23.0/24</h2>
+  <p><strong>Đường mạng này sẽ được chia thành các mạng con với số lượng host:</strong></p>
+  <ul>
+    <li>LAN1: 30 host</li>
+    <li>LAN2: 50 host</li>
+    <li>LAN3: 10 host</li>
+  </ul>
+
+  <h2>Giải pháp</h2>
+  <p>Sắp xếp các mạng dựa vào số lượng host (chiều giảm dần):</p>
+  <ul>
+    <li>LAN2: 50 host</li>
+    <li>LAN1: 30 host</li>
+    <li>LAN3: 10 host</li>
+  </ul>
+
+  <h2>Kỹ thuật VLSM</h2>
+  <p><strong>LAN2:</strong></p>
+  <ul>
+    <li>2<sup>m</sup>-2 >= 50 &rarr; m = 6</li>
+    <li>Số bit mượn thêm từ HOST_id: n = 2 (số lượng bit cần mượn thêm ở phần host_id để chia mạng)</li>
+    <li>xác định lại số lượng bit của phần net_id sau khi chia = 24+n = 24+2 = 26</li>
+    <li>xác định bước nhảy = 2<sup>m</sup> = 2<sup>6</sup> = 64</li>
+    <li>số lượng mạng con được chia = 2<sup>n</sup> = 2<sup>2</sup> = 4</li>
+    <br>
+
+    <li>Mạng con đầu tiên: 192.168.23.0/26 (LAN2)</li>
+    <li>Mạng con: 192.168.23.64/26	(dùng chia cho LAN1)</li>
+    <li>Mạng con: 192.168.23.128/26</li>
+    <li>Mạng con: 192.168.23.192/26</li>
+  </ul>
+  <p><strong>LAN1:</strong></p>
+  <ul>
+    <li>2<sup>m</sup>-2 >= 30 &rarr; m = 5</li>
+
+    <li>n = 32-26-m = 32-26-5 &rarr; = 1</li>
+    <li>xác định lại số lượng bit của phần net_id sau khi chia = 26+n = 26+1 = 27</li>
+    <li>xác định bước nhảy = 2<sup>m</sup> = 2<sup>5</sup> = 32</li>
+    <li>số lượng mạng con được chia = 2<sup>n</sup> = 2<sup>1</sup> = 2</li>
+    <br>
+
+    <li>Mạng con: 192.168.23.0/27 (LAN1)</li>
+    <li>Mạng con: 192.168.23.96/27	(dùng chia cho LAN3)</li>
+
+  </ul>
+  <p><strong>LAN3:</strong></p>
+  <ul>
+    <li>2<sup>m</sup>-2 >= 10 &rarr; m = 4</li>
+    <li>n = 32-27-m = 32-27-4 &rarr; = 1</li>
+    <li>xác định lại số lượng bit của phần net_id sau khi chia = 27+n = 27+1 = 28</li>
+    <li>xác định bước nhảy = 2<sup>m</sup> = 2<sup>4</sup> = 16</li>
+    <li>số lượng mạng con được chia = 2<sup>n</sup> = 2<sup>1</sup> = 2</li>
+    <br>
+    <li>Mạng con: 192.168.23.96/28 (LAN3)</li>
+    <li>Mạng con: 192.168.23.112/28</li>
+  </ul>
+
+  <h2>Thông tin mạng chia</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>STT</th>
+      <th>Mạng</th>
+      <th>Địa chỉ mạng</th>
+      <th>Subnet mask</th>
+      <th>Địa chỉ broadcast</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>1</td>
+      <td>LAN2</td>
+      <td>192.168.23.0/26</td>
+      <td>255.255.255.192</td>
+      <td>192.168.23.63</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>LAN1</td>
+      <td>192.168.23.64/27</td>
+      <td>255.255.255.224</td>
+      <td>192.168.23.95</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>LAN3</td>
+      <td>192.168.23.96/28</td>
+      <td>255.255.255.240</td>
+      <td>192.168.23.111</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="link-container">
+  <a href="index.html">VLSM Calculator</a>
+  <a href="subnetMaskCalculator.html">Subnet Mask Calculator</a>
+  <a href="config.html">Config Cisco</a>
+</div>
+
+</body>
+</html>
