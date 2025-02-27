@@ -53,7 +53,8 @@ PC> ping 192.168.1.1
 Nếu có phản hồi từ router, tức là mạng đã được cấu hình đúng.
 
 ## Video Hưỡng Dẫn
-https://www.youtube.com/watch?v=VL7QSnnei24&list=PLGw1zpyNKaFs-YHqJVmlspz-uT64lcKjB&ab_channel=Nguy%E1%BB%85nXu%C3%A2nHi%E1%BB%87pOfficial
+- [Video Hưỡng Dẫn VLSM , Cấu Hình Cisco Gõ Lệnh Ít](https://www.youtube.com/watch?v=VL7QSnnei24&list=PLGw1zpyNKaFs-YHqJVmlspz-uT64lcKjB&ab_channel=Nguy%E1%BB%85nXu%C3%A2nHi%E1%BB%87pOfficial)
+
 
 ## Kết Luận
 Dự án này cung cấp hướng dẫn cơ bản về cấu hình mạng trong Cisco Packet Tracer, tập trung vào chia subnet với VLSM và thiết lập IP cho các thiết bị. Việc thực hành thường xuyên sẽ giúp bạn hiểu rõ hơn về quản trị mạng và tối ưu hóa tài nguyên IP.
